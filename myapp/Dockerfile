@@ -7,12 +7,13 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | APT_KEY_DONT_WARN_ON_DAN
       nodejs \
       yarn
 
-RUN apt-get update -yqq
-RUN apt-get install -yqq --no-install-recommends nodejs yarn
-
 WORKDIR /usr/src/app
 
-COPY . .
+COPY Gemfile* ./
 
 RUN bundle install
 RUN yarn install
+
+COPY . .
+
+CMD ["bin/rails", "s", "-b", "0.0.0.0"]
