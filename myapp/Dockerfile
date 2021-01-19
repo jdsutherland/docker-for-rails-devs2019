@@ -13,6 +13,8 @@ WORKDIR /usr/src/app
 
 COPY Gemfile* ./
 
+ENV BUNDLE_PATH /gems
+
 RUN bundle install
 RUN yarn install
 
