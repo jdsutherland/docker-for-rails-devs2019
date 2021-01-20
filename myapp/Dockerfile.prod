@@ -6,6 +6,7 @@ LABEL maintainer="jeffdsuth@gmail.com"
 RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | APT_KEY_DONT_WARN_ON_DANGEROUS_USAGE=true apt-key add - && \
     echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
     apt-get update -yqq && apt-get install -yqq --no-install-recommends \
+      netcat \
       nodejs \
       yarn
 
@@ -20,6 +21,7 @@ RUN yarn install
 
 COPY . .
 
+RUN ["chmod", "+x", "/usr/src/app/wait-for"]
 RUN bin/rails assets:precompile
 ENTRYPOINT ["./docker-entrypoint.sh"]
 CMD ["bin/rails", "s", "-b", "0.0.0.0"]
